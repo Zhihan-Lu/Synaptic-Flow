@@ -5,6 +5,7 @@ import torch.optim as optim
 from Models import mlp
 from Models import lottery_vgg
 from Models import lottery_resnet
+from Models import preresnet
 from Models import tinyimagenet_vgg
 from Models import tinyimagenet_resnet
 from Models import imagenet_vgg
@@ -115,7 +116,8 @@ def model(model_architecture, model_class):
         'wide-resnet44': lottery_resnet.wide_resnet44,
         'wide-resnet56': lottery_resnet.wide_resnet56,
         'wide-resnet110': lottery_resnet.wide_resnet110,
-        'wide-resnet1202': lottery_resnet.wide_resnet1202
+        'wide-resnet1202': lottery_resnet.wide_resnet1202,
+        'preresnet101': preresnet.preresnet101
     }
     tinyimagenet_models = {
         'vgg11' : tinyimagenet_vgg.vgg11,

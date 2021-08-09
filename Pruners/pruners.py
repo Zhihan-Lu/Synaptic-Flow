@@ -186,6 +186,7 @@ class SynFlow(Pruner):
             # model.double()
             signs = {}
             for name, param in model.state_dict().items():
+                # print(name)
                 signs[name] = torch.sign(param)
                 param.abs_()
             return signs
@@ -202,11 +203,15 @@ class SynFlow(Pruner):
         input_dim = list(data[0,:].shape)
         input = torch.ones([1] + input_dim).to(device)#, dtype=torch.float64).to(device)
         output = model(input)
-        torch.sum(output).backward()
+        # print(output)
+        result = torch.sum(output)
+        # print(result)
+        result.backward()
         
-        for _, p in self.masked_parameters:
+        for n, p in self.masked_parameters:
             self.scores[id(p)] = torch.clone(p.grad * p).detach().abs_()
             p.grad.data.zero_()
-
+            
+        # print(self.scores)
         nonlinearize(model, signs)
 
